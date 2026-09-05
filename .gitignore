@@ -1,0 +1,37 @@
+.env
+.env.*
+!.env.example
+
+# Python environments, caches, and generated artifacts
+.venv*/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*.db
+*.sqlite
+*.sqlite3
+
+# Local tooling and build output
+.aws-sam/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+node_modules/
+dist/
+build/
+*.log
+
+# Local OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+
+# Certificates and private credentials
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+service-account*.json

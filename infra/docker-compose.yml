@@ -1,0 +1,7 @@
+services:
+  api:
+    build: ../backend
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    ports: ["8000:8000"]
+    volumes: ["../backend:/app", "./seed_data:/seed_data"]
+    environment: ["RECON_DATA_DIR=/seed_data"]

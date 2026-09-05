@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bank_records>
+	<record>
+		<id>bnk-0001</id>
+		<reference>RA-42-0001</reference>
+		<amount>46.48</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-02T10:00:00+00:00</credited_at>
+		<counterparty>Rodriguez, Figueroa and Sanchez</counterparty>
+	</record>
+	<record>
+		<id>bnk-0002</id>
+		<reference>RA-42-0002</reference>
+		<amount>18.19</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-02T15:00:00+00:00</credited_at>
+		<counterparty>Doyle Ltd</counterparty>
+	</record>
+	<record>
+		<id>bnk-0003</id>
+		<reference>RA-42-0003</reference>
+		<amount>100.12</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-02T20:00:00+00:00</credited_at>
+		<counterparty>Mcclain, Miller and Henderson</counterparty>
+	</record>
+	<record>
+		<id>bnk-0004</id>
+		<reference>RA-42-0004</reference>
+		<amount>90.24</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-03T01:00:00+00:00</credited_at>
+		<counterparty>Davis and Sons</counterparty>
+	</record>
+	<record>
+		<id>bnk-0005</id>
+		<reference>RA-42-0005</reference>
+		<amount>83.14</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-03T06:00:00+00:00</credited_at>
+		<counterparty>Guzman, Hoffman and Baldwin</counterparty>
+	</record>
+	<record>
+		<id>bnk-0006</id>
+		<reference>RA-42-0006</reference>
+		<amount>55.72</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-03T11:00:00+00:00</credited_at>
+		<counterparty>Gardner, Robinson and Lawrence</counterparty>
+	</record>
+	<record>
+		<id>bnk-0007</id>
+		<reference>RA-42-0007</reference>
+		<amount>43.58</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-03T16:00:00+00:00</credited_at>
+		<counterparty>Blake and Sons</counterparty>
+	</record>
+	<record>
+		<id>bnk-0008</id>
+		<reference>RA-42-0008</reference>
+		<amount>188.7</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-03T21:00:00+00:00</credited_at>
+		<counterparty>Henderson, Ramirez and Lewis</counterparty>
+	</record>
+	<record>
+		<id>bnk-0009</id>
+		<reference>RA-42-0009</reference>
+		<amount>38.48</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-04T02:00:00+00:00</credited_at>
+		<counterparty>Garcia-James</counterparty>
+	</record>
+	<record>
+		<id>bnk-0010</id>
+		<reference>RA-42-0010</reference>
+		<amount>148.25</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-04T07:00:00+00:00</credited_at>
+		<counterparty>Abbott-Munoz</counterparty>
+	</record>
+	<record>
+		<id>bnk-0011</id>
+		<reference>RA-42-0011</reference>
+		<amount>20.41</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-04T12:00:00+00:00</credited_at>
+		<counterparty>Blair PLC</counterparty>
+	</record>
+	<record>
+		<id>bnk-0012</id>
+		<reference>RA-42-0012</reference>
+		<amount>19.76</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-04T17:00:00+00:00</credited_at>
+		<counterparty>Dudley Group</counterparty>
+	</record>
+	<record>
+		<id>bnk-0013</id>
+		<reference>RA-42-0013</reference>
+		<amount>40.7</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-04T22:00:00+00:00</credited_at>
+		<counterparty>Arnold Ltd</counterparty>
+	</record>
+	<record>
+		<id>bnk-0014</id>
+		<reference>RA-42-0014</reference>
+		<amount>81.64</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-05T03:00:00+00:00</credited_at>
+		<counterparty>Mcclure, Ward and Lee</counterparty>
+	</record>
+	<record>
+		<id>bnk-0015</id>
+		<reference>RA-42-0015</reference>
+		<amount>86.23</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-05T08:00:00+00:00</credited_at>
+		<counterparty>Williams and Sons</counterparty>
+	</record>
+	<record>
+		<id>bnk-0016</id>
+		<reference>RA-42-0016</reference>
+		<amount>175.59</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-05T13:00:00+00:00</credited_at>
+		<counterparty>Galloway-Wyatt</counterparty>
+	</record>
+	<record>
+		<id>bnk-0017</id>
+		<reference>RA-42-0017</reference>
+		<amount>18.69</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-05T18:00:00+00:00</credited_at>
+		<counterparty>James Group</counterparty>
+	</record>
+	<record>
+		<id>bnk-0018</id>
+		<reference>RA-42-0018</reference>
+		<amount>193.9</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-05T23:00:00+00:00</credited_at>
+		<counterparty>Flowers, Martin and Kelly</counterparty>
+	</record>
+	<record>
+		<id>bnk-0019</id>
+		<reference>RA-42-0019</reference>
+		<amount>75.15</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-06T04:00:00+00:00</credited_at>
+		<counterparty>Adams, Zuniga and Wong</counterparty>
+	</record>
+	<record>
+		<id>bnk-0020</id>
+		<reference>RA-42-0020</reference>
+		<amount>188.56</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-06T09:00:00+00:00</credited_at>
+		<counterparty>Reid, Ferguson and Sanchez</counterparty>
+	</record>
+	<record>
+		<id>bnk-0021</id>
+		<reference>RA-42-0021</reference>
+		<amount>147.46</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-06T14:00:00+00:00</credited_at>
+		<counterparty>Gray-Mayo</counterparty>
+	</record>
+	<record>
+		<id>bnk-0022</id>
+		<reference>RA-42-0022</reference>
+		<amount>82.23</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-06T19:00:00+00:00</credited_at>
+		<counterparty>Watts, Robinson and Nguyen</counterparty>
+	</record>
+	<record>
+		<id>bnk-0023</id>
+		<reference>RA-42-0023</reference>
+		<amount>157.19</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-07T00:00:00+00:00</credited_at>
+		<counterparty>Perez Inc</counterparty>
+	</record>
+	<record>
+		<id>bnk-0024</id>
+		<reference>RA-42-0024</reference>
+		<amount>101.15</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-07T05:00:00+00:00</credited_at>
+		<counterparty>Morales-Jones</counterparty>
+	</record>
+	<record>
+		<id>bnk-0025</id>
+		<reference>RA-42-0025</reference>
+		<amount>12.12</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-07T10:00:00+00:00</credited_at>
+		<counterparty>Walter, Edwards and Rios</counterparty>
+	</record>
+	<record>
+		<id>bnk-0026</id>
+		<reference>RA-42-0026</reference>
+		<amount>62.31</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-07T15:00:00+00:00</credited_at>
+		<counterparty>Wilkerson-Day</counterparty>
+	</record>
+	<record>
+		<id>bnk-0027</id>
+		<reference>RA-42-0027</reference>
+		<amount>148.48</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-07T20:00:00+00:00</credited_at>
+		<counterparty>Baker and Sons</counterparty>
+	</record>
+	<record>
+		<id>bnk-0028</id>
+		<reference>RA-42-0028</reference>
+		<amount>121.49</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-08T01:00:00+00:00</credited_at>
+		<counterparty>Hoffman, Baker and Richards</counterparty>
+	</record>
+	<record>
+		<id>bnk-0029</id>
+		<reference>RA-42-0029</reference>
+		<amount>101.05</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-08T06:00:00+00:00</credited_at>
+		<counterparty>Ross, Robinson and Bright</counterparty>
+	</record>
+	<record>
+		<id>bnk-0030</id>
+		<reference>RA-42-0030</reference>
+		<amount>60.94</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-08T11:00:00+00:00</credited_at>
+		<counterparty>Snyder, Campos and Callahan</counterparty>
+	</record>
+	<record>
+		<id>bnk-0031</id>
+		<reference>RA-42-0031</reference>
+		<amount>80.55</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-08T16:00:00+00:00</credited_at>
+		<counterparty>Burton Ltd</counterparty>
+	</record>
+	<record>
+		<id>bnk-0032</id>
+		<reference>RA-42-0032</reference>
+		<amount>120.29</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-08T21:00:00+00:00</credited_at>
+		<counterparty>Carlson-Cruz</counterparty>
+	</record>
+	<record>
+		<id>bnk-0033</id>
+		<reference>RA-42-0033</reference>
+		<amount>43.49</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-09T02:00:00+00:00</credited_at>
+		<counterparty>Ferrell, Rice and Maddox</counterparty>
+	</record>
+	<record>
+		<id>bnk-0034</id>
+		<reference>RA-42-0034</reference>
+		<amount>40.39</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-09T07:00:00+00:00</credited_at>
+		<counterparty>Frazier Inc</counterparty>
+	</record>
+	<record>
+		<id>bnk-0035</id>
+		<reference>RA-42-0035</reference>
+		<amount>134.49</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-09T12:00:00+00:00</credited_at>
+		<counterparty>Dyer, Potter and Mack</counterparty>
+	</record>
+	<record>
+		<id>bnk-0036</id>
+		<reference>RA-42-0036</reference>
+		<amount>41.69</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-09T17:00:00+00:00</credited_at>
+		<counterparty>Rodriguez-Graham</counterparty>
+	</record>
+	<record>
+		<id>bnk-0037</id>
+		<reference>RA-42-0037</reference>
+		<amount>127.63</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-09T22:00:00+00:00</credited_at>
+		<counterparty>Smith-Bowen</counterparty>
+	</record>
+	<record>
+		<id>bnk-0038</id>
+		<reference>RA-42-0038</reference>
+		<amount>122.7</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-10T03:00:00+00:00</credited_at>
+		<counterparty>Baker, Mason and White</counterparty>
+	</record>
+	<record>
+		<id>bnk-0039</id>
+		<reference>RA-42-0039</reference>
+		<amount>96.67</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-10T08:00:00+00:00</credited_at>
+		<counterparty>Harrell LLC</counterparty>
+	</record>
+	<record>
+		<id>bnk-0040</id>
+		<reference>RA-42-0040</reference>
+		<amount>24.23</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-10T13:00:00+00:00</credited_at>
+		<counterparty>Romero, Gonzalez and Brooks</counterparty>
+	</record>
+	<record>
+		<id>bnk-0041</id>
+		<reference>RA-42-0041</reference>
+		<amount>160.54</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-10T18:00:00+00:00</credited_at>
+		<counterparty>Ryan PLC</counterparty>
+	</record>
+	<record>
+		<id>bnk-0042</id>
+		<reference>RA-42-0042</reference>
+		<amount>185.71</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-10T23:00:00+00:00</credited_at>
+		<counterparty>George Group</counterparty>
+	</record>
+	<record>
+		<id>bnk-0043</id>
+		<reference>RA-42-0043</reference>
+		<amount>50.9</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-11T04:00:00+00:00</credited_at>
+		<counterparty>Rodriguez LLC</counterparty>
+	</record>
+	<record>
+		<id>bnk-0045</id>
+		<reference>RA-42-0045</reference>
+		<amount>36.82</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-11T14:00:00+00:00</credited_at>
+		<counterparty>Arroyo, Miller and Tucker</counterparty>
+	</record>
+	<record>
+		<id>bnk-0046</id>
+		<reference>RA-42-0046</reference>
+		<amount>190.89</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-18T18:00:00+00:00</credited_at>
+		<counterparty>Spence PLC</counterparty>
+	</record>
+	<record>
+		<id>bnk-dup-0047</id>
+		<reference>RA-42-0047</reference>
+		<amount>106.06</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-12T00:00:00+00:00</credited_at>
+		<counterparty>Anderson Group</counterparty>
+	</record>
+	<record>
+		<id>bnk-0047</id>
+		<reference>RA-42-0047</reference>
+		<amount>106.06</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-12T00:00:00+00:00</credited_at>
+		<counterparty>Anderson Group</counterparty>
+	</record>
+	<record>
+		<id>bnk-orphan-0048</id>
+		<reference>ORPHAN-47</reference>
+		<amount>12.34</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-12T05:00:00+00:00</credited_at>
+		<counterparty>Unknown</counterparty>
+	</record>
+	<record>
+		<id>bnk-0048</id>
+		<reference>RA-42-0048</reference>
+		<amount>128.5</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-12T05:00:00+00:00</credited_at>
+		<counterparty>Martin, Rose and Obrien</counterparty>
+	</record>
+	<record>
+		<id>bnk-0049</id>
+		<reference>RA-42-0049</reference>
+		<amount>199.18</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-12T10:00:00+00:00</credited_at>
+		<counterparty>Hickman Ltd</counterparty>
+	</record>
+	<record>
+		<id>bnk-0051</id>
+		<reference>RA-42-0051</reference>
+		<amount>33.79</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-12T20:00:00+00:00</credited_at>
+		<counterparty>Brooks, Lam and Hayes</counterparty>
+	</record>
+	<record>
+		<id>bnk-0052</id>
+		<reference>RA-42-0052</reference>
+		<amount>25.01</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-20T00:00:00+00:00</credited_at>
+		<counterparty>Walker LLC</counterparty>
+	</record>
+	<record>
+		<id>bnk-dup-0053</id>
+		<reference>RA-42-0053</reference>
+		<amount>84.67</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-13T06:00:00+00:00</credited_at>
+		<counterparty>Chapman and Sons</counterparty>
+	</record>
+	<record>
+		<id>bnk-0053</id>
+		<reference>RA-42-0053</reference>
+		<amount>84.67</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-13T06:00:00+00:00</credited_at>
+		<counterparty>Chapman and Sons</counterparty>
+	</record>
+	<record>
+		<id>bnk-orphan-0054</id>
+		<reference>ORPHAN-53</reference>
+		<amount>12.34</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-13T11:00:00+00:00</credited_at>
+		<counterparty>Unknown</counterparty>
+	</record>
+	<record>
+		<id>bnk-0054</id>
+		<reference>RA-42-0054</reference>
+		<amount>104.82</amount>
+		<currency>INR</currency>
+		<credited_at>2025-01-13T11:00:00+00:00</credited_at>
+		<counterparty>Robinson, Jones and Welch</counterparty>
+	</record>
+</bank_records>

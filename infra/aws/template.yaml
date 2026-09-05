@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: ReconAudit FastAPI Lambda container deployment
+Resources:
+  ReconAuditFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image
+      Timeout: 90
+      MemorySize: 1024
+      Environment:
+        Variables:
+          DATABASE_URL: '{{resolve:ssm:/reconaudit/database-url}}'
+          GEMINI_API_KEY: '{{resolve:ssm:/reconaudit/gemini-api-key}}'
+          RECON_DATA_DIR: /tmp/reconaudit-data
+      Events:
+        Api:
+          Type: HttpApi
+          Properties: {Path: /{proxy+}, Method: ANY}
+    Metadata:
+      DockerTag: reconaudit-v1
+      DockerContext: ../../backend
+      Dockerfile: Dockerfile
