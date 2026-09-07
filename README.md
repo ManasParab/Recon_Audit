@@ -1,62 +1,232 @@
-# ReconAudit — AI Finance Controller
+# ReconAudit — AI Finance Controller & Reconciliation Pipeline
 
-ReconAudit closes a 60-order synthetic finance reconciliation batch: JSON orders, CSV settlements, and XML bank records are normalized; a deterministic rule engine matches them; a bounded evidence-only resolver investigates exceptions; every decision enters a SHA-256 hash chain; and the hidden answer key powers automatic evaluation.
+ReconAudit is an end-to-end finance reconciliation application for comparing orders, payment settlements, and bank credits. It turns separate source files into explainable reconciliation results in a browser dashboard.
 
-## Client upload workflow
+I built it as a portfolio project for finance operations, accounting automation, and AI-agent workflow roles. Its focus is multi-source data integration, deterministic financial controls, evidence-grounded AI investigation, persistent auditability, and an honest exception queue.
 
-After starting the API, open `http://localhost:8000/` in your browser. Do not open `frontend/index.html` directly from File Explorer: browsers treat `file:` pages as isolated origins, which can prevent the client from reaching the API. Create one review workspace and upload:
+---
 
-- **Orders (JSON):** `id`, `reference`, `amount`, `currency`, `created_at`, `merchant`
-- **Settlements (CSV):** `id`, `reference`, `amount`, `currency`, `settled_at`, `merchant`
-- **Bank credits (XML):** `id`, `reference`, `amount`, `currency`, `credited_at`, `counterparty`
+## Problem Statement
 
-The app validates and retains malformed-row messages, permits replacement uploads,
-then processes only the uploaded data. The dashboard exposes the normalized data,
-matching rule/evidence, exceptions, tool trace, and ledger verification. Client
-uploads intentionally do not display fabricated accuracy scores: accuracy requires
-an independently verified answer key.
+Finance teams often verify that an order was settled by a payment processor and eventually received as a bank credit. The records originate from separate systems and are frequently checked manually.
 
-## Run locally
+ReconAudit brings those sources together and:
 
-Copy [`.env.example`](.env.example) to `.env` and configure it locally. Fill in
-`GEMINI_API_KEY` to enable Gemini 3.6 Flash function calling; SQLite is the default and
-does not require database credentials. Use `.env.example` as the safe template.
+1. **Ingests** uploaded JSON, CSV, and XML source files
+2. **Validates and normalizes** records, retaining malformed rows as explicit parse failures
+3. **Matches** order, settlement, and bank records through deterministic exact, time-window, and fuzzy rules
+4. **Investigates** exceptions using a Gemini function-calling agent and bounded, application-provided evidence tools
+5. **Stores** batches, records, runs, exceptions, agent outcomes, and audit events through SQLAlchemy
+6. **Surfaces** grouped exceptions, plain-language explanations, CSV export, and audit verification in a browser dashboard
 
-Never commit `.env`, API keys, database credentials, private certificates, or service-account files.
-The repository ignores these files by default. For deployment, store secrets in the deployment
-platform's secret manager and provide only non-sensitive configuration through environment variables.
+The application does not claim an automatic answer for every record. When the available evidence is insufficient, it returns **Needs your review** instead of force-matching a transaction.
 
-For the Buildathon demo, configure a real Gemini API key and use **Run synthetic
-demo** in the dashboard. This executes the reproducible 60-record batch and
-reports match rate, resolution accuracy, and honesty score.
+---
+
+## Architecture
+
+![ReconAudit architecture](docs/recon-audit-architecture.png)
+
+The frontend is served from the FastAPI application at `http://localhost:8000/`. Live job updates use polling of the reconciliation-job endpoint; there is no WebSocket server or independent job queue.
+
+---
+
+## Tech Stack
+
+| Layer | Tool |
+|---|---|
+| API and application server | Python, FastAPI, Uvicorn |
+| Validation and schema | Pydantic |
+| File parsing | Pandas, `xmltodict`, Python JSON handling |
+| Matching | Python `Decimal`, RapidFuzz |
+| AI investigation | Google Gen AI SDK (`google-genai`), Gemini native function calling |
+| Persistence | SQLAlchemy 2.x |
+| Local database | SQLite |
+| Production database option | PostgreSQL through `psycopg` and `DATABASE_URL` |
+| Frontend | HTML, CSS, vanilla JavaScript |
+| Audit integrity | Custom SHA-256 linked hash chain |
+| Deployment scaffolding | Docker Compose, AWS SAM/Mangum |
+
+---
+
+## Database Schema
+
+The SQLAlchemy entities are defined in [`backend/app/db/models.py`](backend/app/db/models.py).
+
+- **`ingestion_batches`**: one row per client upload workspace or reconciliation batch
+- **`uploaded_files`**: source name, source type, accepted-row count, and failed-row count
+- **`parse_failures`**: source row, original payload, and parsing error for rows that could not be normalized
+- **`normalized_transactions`**: canonical transactions with source, amount, currency, timestamp, and original payload
+- **`reconciliation_runs`**: completed run result and evaluation payload
+- **`match_results`**: deterministic match or exception result and applied rule
+- **`exceptions`**: detected exception type and its result payload
+- **`agent_resolutions`**: agent outcome, root-cause category, and evidence payload
+- **`audit_ledger`**: event records containing each predecessor hash and SHA-256 record hash
+
+SQLite is used when `DATABASE_URL` is not configured. A managed PostgreSQL connection URL can be supplied for deployment.
+
+---
+
+## Reconciliation Logic
+
+The matching engine in [`backend/app/matching/engine.py`](backend/app/matching/engine.py) applies these implemented tiers:
+
+| Tier | Rule currently implemented |
+|---|---|
+| Exact | Groups records by reference. Order, settlement, and bank credit must have equal amount and currency; bank-credit timing above two days is flagged as a timing anomaly. |
+| Windowed | For an unmatched order, seeks unused settlement and bank records with equal amount/currency within two days of the order timestamp. |
+| Fuzzy | For an unmatched order, seeks unused records with the same currency, amount difference no greater than `0.01`, and RapidFuzz reference/counterparty score of at least `85`. |
+
+The engine produces: `MISSING_SETTLEMENT`, `MISSING_BANK_CREDIT`, `AMOUNT_MISMATCH`, `TIMING_ANOMALY`, `DUPLICATE_TRANSACTION`, and `ORPHAN_RECORD` exceptions.
+
+---
+
+## Gemini Agent and Guardrails
+
+Deterministic code performs financial matching and exception detection. Gemini is used only after an exception is flagged, to select evidence-gathering actions and produce a conclusion from the returned results.
+
+The function-calling loop uses `gemini-3.6-flash` and can invoke these application-owned tools:
+
+- `lookup_record` — retrieve a transaction by ID
+- `search_related_transactions` — retrieve transactions sharing a reference
+- `check_timing_window` — compare two transaction timestamps
+- `compare_amounts` — compare two transaction amounts
+
+Each exception has a configurable step budget, defaulting to four calls. The grounding validation in [`backend/app/agent/guardrails.py`](backend/app/agent/guardrails.py) requires a valid root-cause category, cited fields, and citations present in the tool trace. Otherwise the outcome becomes `ABSTAINED`.
+
+Missing-bank-credit cases with no independently observed bank record are also forced to abstain. The dashboard labels this outcome **Needs your review**.
+
+---
+
+## Data Quality Handling
+
+The upload parser in [`backend/app/ingestion/parsers.py`](backend/app/ingestion/parsers.py) validates each source record independently:
+
+| Source | File format | Required normalized values |
+|---|---|---|
+| Orders | JSON | `id`, `amount`, `currency`, `created_at` |
+| Settlements | CSV | `id`, `amount`, `currency`, `settled_at` |
+| Bank credits | XML | `id`, `amount`, `currency`, `credited_at` |
+
+| Issue | Current handling |
+|---|---|
+| Missing or invalid required field | Reports the row as a parse failure with its original payload and error text. |
+| Invalid date or amount conversion | Reports the row as a parse failure. |
+| Duplicate ID within one uploaded file | Retains the later duplicate as a parse failure; accepts only the first row. |
+| Re-upload of one source type | Intentionally replaces existing records, file metadata, and parse failures for that source. |
+
+Client uploads do not receive invented accuracy scores. Precision, recall, F1, and related accuracy measures are calculated only for the synthetic demo, which has a separate `ground_truth.json` answer key.
+
+---
+
+## Setup and Running Locally
+
+### 1. Prerequisites
+
+- Python 3.11 or newer
+- A Gemini API key for live Gemini investigations
+- No database credential for the default SQLite setup
+
+### 2. Install dependencies
 
 ```powershell
 cd backend
 py -3.11 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 py -m pip install -r requirements.txt
+```
+
+### 3. Configure environment
+
+From the project root:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Edit `.env`:
+
+```dotenv
+GEMINI_API_KEY=your_gemini_api_key_here
+DATABASE_URL=sqlite:///./recon_audit.db
+AGENT_STEP_BUDGET=4
+AGENT_MAX_CONCURRENCY=4
+```
+
+`GEMINI_API_KEY` is the only Gemini credential. The default SQLite database does not need a username or password. Use a PostgreSQL URL in `DATABASE_URL` for PostgreSQL deployments.
+
+### 4. Start the application
+
+```powershell
+cd backend
+.\.venv\Scripts\Activate.ps1
 uvicorn app.main:app --reload
 ```
 
-Open `http://localhost:8000/` in a browser. The API defaults to `http://localhost:8000`; edit `frontend/js/config.js` after deployment. API docs are at `http://localhost:8000/docs`.
+Open [http://localhost:8000/](http://localhost:8000/) in a browser. API documentation is available at [http://localhost:8000/docs](http://localhost:8000/docs).
 
-Reconciliations run in the background so the page remains responsive while Gemini investigates exceptions. Keep the page open until the result screen appears; if Gemini is rate-limited, its required retry can take up to a minute.
+### 5. Upload and reconcile data
 
-## Test
+1. Create a workspace in the dashboard.
+2. Upload Orders, Settlements, and Bank Credits files.
+3. Review accepted rows and parse-failure messages.
+4. Start reconciliation and follow the live status panel.
+5. Review results grouped by exception type.
+6. Export the exception table to CSV, if required.
+7. Verify the audit ledger from the results page.
+
+### 6. Run the synthetic demo
+
+Use **Run synthetic demo** in the dashboard. It generates a fixed 60-record batch, reconciles it, and evaluates it against the separate ground-truth file. That answer key is used for evaluation only, not as agent evidence.
+
+### 7. Run tests
 
 ```powershell
 cd backend
 py -m pytest
 ```
 
-## Architecture
+---
 
-- Synthetic generator with fixed seed and separately stored ground truth
-- JSON/CSV/XML parsers into a Pydantic canonical schema
-- Explainable deterministic exact/window/typed-exception engine
-- Four-tool, step-bounded, grounding-validated exception resolver
-- SHA-256 tamper-evident audit chain
-- Evaluation of throughput, accuracy, honesty, and false resolutions
-- FastAPI APIs, Tailwind/vanilla-JS dashboard, Docker and SAM deployment scaffold
+## Project Structure
 
-For deployment, configure managed Postgres through `DATABASE_URL`, supply `GEMINI_API_KEY` for a Gemini provider implementation, then deploy the Lambda image with SAM. The current local implementation deliberately works without external keys so judges can reproduce the pipeline.
+```text
+Recon-Audit/
+├── backend/
+│   ├── app/
+│   │   ├── agent/               # Gemini provider, tool schemas, guardrails
+│   │   ├── audit_ledger/        # SHA-256 hash-chain implementation
+│   │   ├── core/                # environment configuration
+│   │   ├── db/                  # SQLAlchemy session and models
+│   │   ├── evaluation/          # synthetic-demo metrics
+│   │   ├── ingestion/           # schemas and JSON/CSV/XML parsers
+│   │   ├── matching/            # deterministic matching engine
+│   │   ├── synthetic_data/      # reproducible demo generator
+│   │   ├── main.py              # FastAPI endpoints and frontend hosting
+│   │   └── services.py          # orchestration and persistence
+│   └── requirements.txt
+├── frontend/                    # upload, status, and results UI
+├── infra/                       # seed data, SAM template, Docker Compose
+├── scripts/                     # utility and product-demo assembly scripts
+├── .env.example
+└── README.md
+```
+
+---
+
+## Current Limitations and Future Improvements
+
+The following are not currently independent production services:
+
+- **Durable distributed job queue:** Job progress is held in FastAPI process memory and a restart loses active job status.
+- **Multi-instance coordination:** There is no Redis, Celery, SQS, or equivalent worker queue.
+- **Authentication and RBAC:** The local app has no implemented user authentication or finance-role permissions.
+- **Production CORS policy:** Local development allows all origins and needs a restrictive deployment configuration.
+- **Broad CI/CD and end-to-end coverage:** Tests exist, but a complete CI/CD pipeline and full e2e suite are not present.
+- **Production file security:** Real client uploads require TLS, authenticated access, encrypted storage, retention controls, and secret management outside `.env`.
+
+---
+
+## Author’s Note
+
+ReconAudit demonstrates a complete reconciliation workflow: file ingestion, validation, normalization, deterministic matching, AI-assisted exception investigation, persistence, evaluation, human-review abstention, and audit verification. The design treats AI as an evidence investigator rather than a replacement for financial controls, so it can communicate both what it can explain and what still requires finance-professional review.
